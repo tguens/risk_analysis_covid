@@ -13,6 +13,8 @@ import json
 import newspaper
 import tqdm
 from newspaper import Article
+from sources import sources
+import subprocess
 
 
 #=======================================================
@@ -69,22 +71,7 @@ def dump_data(username, tweets, root='../data/'):
 #=======================================================
 # Helper functions to scrap newspapers
 
-sources_senegal = { "Le Soleil": "http://lesoleil.sn",  
-                    "Le Quotidien": "https://www.lequotidien.sn"}
-
-sources_algeria = {}
-
-
-sources = {'Senegal': sources_senegal,
-           'Algeria': sources_algeria}
-
-header = ['article id',
-          'title article',
-          'text article',
-          'Date published',
-          'country name',
-          'name of the newspaper']
-
+'''
 class ArticleScrapper:
     def __init__(self, 
                 country: str, 
@@ -103,16 +90,6 @@ class ArticleScrapper:
         self.counter +=1
         return _id
         
-    def get_date(self, article): 
-        #TODO: Make it more automatic and precise.
-        soup = BeautifulSoup(article.html, 'html.parser')
-        try:
-            date_text = soup.find_all("div", class_='date')[0]
-            text = date_text.get_text()
-            return text[:14] #Heuristic. need cleaning up.
-        except:
-            return 'Unknown'
-
     def read_article(self, url):
         # TODO: Make sure we can read the article (tests?)
         # TODO: Assign id smartly
@@ -154,17 +131,97 @@ class ArticleScrapper:
             if iter_ > max_iter:
                 break
         return articles, header
+
+  class ArticleScrapper:
+    def __init__(self, 
+                country: str, 
+                source: str,
+                website:str, 
+                language="fr"):
+        self.country = country
+        self.language = language
+        self.source = source
+        self.website = website
+        self.counter = 0
+        self.header = header
+
+    def create_id(self, article):
+        _id = "{}_{}_{}".format(self.country, self.source, self.counter)
+        self.counter +=1
+        return _id
         
-def save(articles:list, 
-        header:list,
-        path='../data/articles.json'):
-    #Articles is a list of list
-    out_dic = {'head': header, 
-                'articles':articles}
-    print('Saving {} articles in {}'.format(len(articles), path))
-    with open(path, 'w') as writer:
-        json.dump(out_dic, writer)
+    def get_date(self, article): 
+        #TODO: Make it more automatic and precise.
+        soup = BeautifulSoup(article.html, 'html.parser')
+        try:
+            date_text = soup.find_all("div", class_='date')[0]
+            text = date_text.get_text()
+            return text[:14] #Heuristic. need cleaning up.
+        except:
+            return 'Unknown'
+
+    def read_article(self, tweet, url):
+        # TODO: Make sure we can read the article (tests?)
+        # TODO: Assign id smartly
+        # TODO Make sure we have a clear formatting for the date
+        article = Article(url, language=self.language)
+        article.download()
+        article.parse()
+        _id = self.create_id(article)
+        out_article = [_id, 
+                       article.title,
+                       article.text,
+                       tweet['timestamp'],
+                       self.country,
+                       self.source, 
+                       tweet['text']]
+        return out_article
+
+    def tweets_to_articles(self, tweets, limit=1e10):
+        """
+        param: tweets is a list of dict.
+        """
+        nb_articles = 0
+        scraped_articles = []
+        for i, tweet in enumerate(tweets):
+            if tweet['username'] == self.source and len(tweet['links'])>0:
+                read_articles = list(map(
+                    lambda url: self.read_article(tweet, url), tweet['links']))
+                scraped_articles.extend(read_articles)
+                nb_articles += len(read_articles)
+            if nb_articles > limit:
+                break
+
+        print(f'Found {nb_articles} articles over the {len(tweets)} tweets')
+        return scraped_articles
     
+
+        
+    def read_all(self, max_iter=10):
+        """
+        Get list of lists of articles.
+        """
+        config = newspaper.Config()
+        config.memoize_articles = False
+        paper = newspaper.build(self.website, 
+                                language=self.language,
+                                config=config) 
+        articles = []
+        iter_ = 0
+        print("PAPER", paper.articles)
+        for article in tqdm.tqdm(paper.articles):
+            print("URL:", article.url)
+            row, _ = self.read_article(article.url)
+            articles.append(row)
+            iter_ += 1
+            if iter_ > max_iter:
+                break
+        return articles, header           
+
+sources_senegal = { "Le Soleil": "http://lesoleil.sn",  
+                    "Le Quotidien": "https://www.lequotidien.sn"}
+
+sources_algeria = {}
 def scrap_country(country, 
                     language="fr", 
                     max_iter=1000,
@@ -182,6 +239,122 @@ def scrap_country(country,
         filename = "".join(name.lower().split())
         filename = path+filename+'.json'
         save(articles, header, filename)
+'''
+
+class ArticleScrapper:
+    """
+    Class to read find urls from tweets and 
+    format the data under the relevant format.
+    """
+    def __init__(self,
+                 country: str,
+                 source: str,
+                 language="fr"):
+        self.country = country
+        self.language = language
+        self.source = source
+        self.counter = 0
+        self.header = header
+
+    def create_id(self, article):
+        _id = "{}_{}_{}".format(self.country, self.source, self.counter)
+        self.counter += 1
+        return _id
+
+    def read_article(self, tweet, url):
+        config = newspaper.Config()
+        config.memoize_articles = False
+        article = Article(url, language=self.language, config=config)
+        article.download()
+        article.parse()
+        _id = self.create_id(article)
+        out_article = [_id,
+                       article.title,
+                       article.text,
+                       tweet['timestamp'],
+                       self.country,
+                       self.source,
+                       tweet['text']]
+        return out_article
+
+    def tweets_to_articles(self, tweets, limit):
+        """
+        param: tweets is a list of dict.
+        limit: max number of articles to get from th tweets
+        """
+        nb_articles = 0
+        scraped_articles = []
+        for tweet in tqdm.tqdm(tweets):
+            if tweet['screen_name'] == self.source and len(tweet['links']) > 0:
+                read_articles = list(map(
+                    lambda url: self.read_article(tweet, url), tweet['links']))
+                scraped_articles.extend(read_articles)
+                nb_articles += len(read_articles)
+            if nb_articles > limit:
+                break
+
+        print(f'Found {nb_articles} articles over the {len(tweets)} tweets')
+        return scraped_articles
+
+
+def get_tweets(username, 
+                limit,
+                bd, 
+                ed, 
+                root):
+    
+    #scrap_country(country=args.country)
+    output_path = root + "tweets_" + username + "_"+ bd + "_"+ ed +'.json'
+    to_run = ["twitterscraper",
+              f"{username}",
+              "--user",
+              f"--limit={limit}",
+              f"-bd={bd}",
+              f"-ed={ed}",
+              f"--output={output_path}"]
+    subprocess.call(to_run)
+    print(f'Saved tweets in {output_path}')
+    return output_path
+
+
+def scrap_country(country,
+                  language,
+                  limit,
+                  scrap_tweets,
+                  bd,
+                  ed,
+                  root):
+    
+    assert country in sources.keys(), "Error with the country name"
+    local_sources = sources[country]
+    for source in local_sources:
+        print('Start Scraping the information from {} | {}'.format(country,
+                                                                   source))
+        if scrap_tweets:
+            output_path = get_tweets(source, limit, bd, ed, root)
+        else:
+            output_path = root + "tweets_" + source + "_" + bd + "_" + ed + '.json'
+        
+        with open(output_path, 'r') as reader:
+            tweets = json.load(reader)
+        print(f'Loading {len(tweets)} tweets')
+
+        scraper = ArticleScrapper(country=country,
+                                  source=source,
+                                  language=language)
+        
+        articles = scraper.tweets_to_articles(tweets, limit)
+        
+        out_dic = {'head': header,
+                   'articles': articles}
+
+        filename = root + "articles_" + source + "_" + bd + "_" + ed + '.json'
+        
+        with open(filename, 'w') as writer:
+            json.dump(out_dic, writer, indent=4)
+
+
+
 
 
 #=======================================================
@@ -239,9 +412,25 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--country', type=str)
-    parser.add_argument('--newspapers', action='store_true', default=True)
-    args = parser.parse_args()
+    #parser.add_argument('--newspapers', action='store_true', default=True)
+    parser.add_argument('--bd', type=str, default="2020-02-01")
+    parser.add_argument('--ed', type=str, default="2020-04-12")
+    parser.add_argument('--limit', type=int, default=1e8)
+    parser.add_argument('--root', type=str, default='../data/', help='Path to the data file')
+    parser.add_argument('--language', type=str, default="fr")
+    parser.add_argument('--scrap_tweets', action='store_false', default=True)
 
-    scrap_country(country=args.country)
+    args = parser.parse_args()
+    print('Running with the following arguments: {}'.format(args))
+    scrap_country(args.country,
+                  args.language,
+                  args.limit,
+                  args.scrap_tweets,
+                  args.bd,
+                  args.ed,
+                  args.root)
+    
+
+   
 
 
