@@ -23,7 +23,7 @@ Our data includes the following countries:
 - 🇧🇫 Burkina Faso   
 - :burundi: Burundi 
 - :comoros: Comores 
-- :congo: Congo 
+- 🇨🇬 Congo 
 - :gabon: Gabon 
 - :madagascar: Madagascar 
 - :mali: Mali 
