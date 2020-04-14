@@ -23,6 +23,6 @@ Our data includes the following countries:
 - Gabon :gabon:
 - Senegal :senegal:
 - Mali :mali:
-- Republique Democratique du Congo :congo:
+- Republique Democratique du Congo 🇨🇩
 
 
