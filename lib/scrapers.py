@@ -265,16 +265,26 @@ class ArticleScrapper:
         config = newspaper.Config()
         config.memoize_articles = False
         article = Article(url, language=self.language, config=config)
-        article.download()
-        article.parse()
-        _id = self.create_id(article)
-        out_article = [_id,
-                       article.title,
-                       article.text,
-                       tweet['timestamp'],
-                       self.country,
-                       self.source,
-                       tweet['text']]
+        try:
+            article.download()
+            article.parse()
+            _id = self.create_id(article)
+            out_article = [_id,
+                           article.title,
+                           article.text,
+                           tweet['timestamp'],
+                           self.country,
+                           self.source,
+                           tweet['text']]
+        except Exception as e:
+            print(f'Caught {e}')
+            out_article = ['Error',
+                            '',
+                            '',
+                            tweet['timestamp'],
+                            self.country,
+                            self.source,
+                            tweet['text']]
         return out_article
 
     def tweets_to_articles(self, tweets, limit):
@@ -307,7 +317,6 @@ def get_tweets(username,
     output_path = root + "tweets_" + username + "_"+ bd + "_"+ ed +'.json'
     to_run = ["twitterscraper",
               f"{username}",
-              "--user",
               f"--limit={limit}",
               f"-bd={bd}",
               f"-ed={ed}",
@@ -415,7 +424,7 @@ if __name__ == "__main__":
     #parser.add_argument('--newspapers', action='store_true', default=True)
     parser.add_argument('--bd', type=str, default="2020-02-01")
     parser.add_argument('--ed', type=str, default="2020-04-12")
-    parser.add_argument('--limit', type=int, default=1e8)
+    parser.add_argument('--limit', type=int, default=10000000)
     parser.add_argument('--root', type=str, default='../data/', help='Path to the data file')
     parser.add_argument('--language', type=str, default="fr")
     parser.add_argument('--scrap_tweets', action='store_false', default=True)
