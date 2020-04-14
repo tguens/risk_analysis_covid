@@ -22,5 +22,5 @@ For now, our approach focuses on French speaking countries on the African contin
 Our data includes the following countries:
 - Gabon: :gabon:
 - Senegal :senegal:
-- :beaver:
+
 
