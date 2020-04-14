@@ -20,4 +20,9 @@ Project that consists in leveraging different sources of information to better i
 ## Supported countries
 For now, our approach focuses on French speaking countries on the African continent.
 Our data includes the following countries:
+- Gabon :gabon:
 - Senegal :senegal:
+- Mali :mali:
+- Republique Democratique du Congo 🇨🇩
+
+
