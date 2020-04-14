@@ -21,16 +21,18 @@ William :
 Theo :
 - Mali
 - Senegal
-- Republique Democratique Congo
-- Congo Brazzaville
-- Burkina Faso
-- Burundi
-- Comores
 - Gabon
-- Madagascar
-- Mauritanie
+- Republique Democratique Congo
+- Burkina Faso
 - Togo
+- Burundi
+
+- Comores
+- Madagascar
+
+- Mauritanie
 - Centrafrique
+- Congo Brazzaville
 """
 
 sources_algeria = []
@@ -40,6 +42,11 @@ sources_senegal = ["LeSoleilonline", "QuotidienSN"]
 sources_gabon = ["InfosGabon"]
 sources_mali = ["JourDuMali"]
 sources_rdc = ["CongoActu"]
+sources_burkina = ["Lefaso_net"]
+sources_togo = ["SAVOIRNEWS1"]
+sources_burundi = ["iwacuinfo"]
+sources_comores = ["comoresinfos"]
+sources_madagascar = ["madatribune"]
 
 #sources_senegal = ["QuotidienSN"]
 
@@ -47,7 +54,13 @@ sources = {'Senegal': sources_senegal,
            'Algeria': sources_algeria, 
            'Mali':sources_mali, 
            'Gabon': sources_gabon, 
-           'RDC':sources_rdc}
+           'RDC':sources_rdc, 
+           'Burkina':sources_burkina, 
+           'Togo':sources_togo,
+           'Burundi':sources_burundi, 
+           'Comores':sources_comores, 
+           'Madagascar':sources_madagascar}
+
 
 header = ['id',
           'title',
