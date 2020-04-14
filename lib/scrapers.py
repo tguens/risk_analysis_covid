@@ -254,7 +254,7 @@ class ArticleScrapper:
         self.language = language
         self.source = source
         self.counter = 0
-        self.header = header
+        #self.header = header
 
     def create_id(self, article):
         _id = "{}_{}_{}".format(self.country, self.source, self.counter)
