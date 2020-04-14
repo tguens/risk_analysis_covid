@@ -26,7 +26,7 @@ Our data includes the following countries:
 - Republique Democratique du Congo 🇨🇩
 - Burkina Faso 🇧🇫
 - Burundi :burundi:
-- Comores :comores:
+- Comores :comoros:
 - Madagascar :madagascar:
 
 
