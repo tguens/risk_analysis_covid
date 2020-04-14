@@ -16,3 +16,6 @@ Project that consists in leveraging different sources of information to better i
 - Eventually, all of it is saved in a json file in the data folder. The file is simply a dictionnary with keys "header" and "articles".
 - If you succesfully downloaded the tweets, but you had a problem with the articles and you dont want to download the tweets one more time, add ```--scrap_tweets``` to the command line arguments. 
  
+:sen:
+:sn:
+:fr:
