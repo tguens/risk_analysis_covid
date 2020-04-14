@@ -1,4 +1,4 @@
-# Covid Risk Analysis
+# Covid Risk Analysis :earth_af:
 ## Development branch :hammer:
 
 Project that consists in leveraging different sources of information to better inform, track and prepare the covid crisis in some specific countries
@@ -20,4 +20,4 @@ Project that consists in leveraging different sources of information to better i
 ## Supported countries
 For now, our approach focuses on French speaking countries on the African continent.
 Our data includes the following countries:
-Senegal :senegal"
+- Senegal :senegal:
