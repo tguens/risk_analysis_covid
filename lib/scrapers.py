@@ -13,7 +13,7 @@ import json
 import newspaper
 import tqdm
 from newspaper import Article
-from sources import sources
+from sources import sources, header
 import subprocess
 
 
