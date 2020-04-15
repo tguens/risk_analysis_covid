@@ -4,15 +4,14 @@ http://www.africain.info/afrique-tous-les-journaux-africains
 
 
 William :
--Cote d’ivoire
--Cameroun
--Algerie
--Benin
+-#Cote d’ivoire
+-#Cameroun
+-#Algerie
+-#Benin
 -Djibouti
--Guinée
--Guinée équatoriale ???
--Niger
--Rwanda ???
+-#Guinée
+-#Ile Maurice
+-#Niger
 -Tanzanie ???
 -Tunisie
 -Maroc
@@ -34,10 +33,19 @@ Theo :
 - Centrafrique
 - Congo Brazzaville
 """
+#William
+sources_algeria = ["elwatancom","ObservAlgerie"]
+sources_ivory_coast = ["Koaci","Linfodrome"]
+sources_cameroun=["actucameroun","cameroun24"]
+sources_benin=["24haubenin","MatinLibre"]
+sources_djibouti=[]# La voix de Djibouti mais aucun article sur leur twitter
+sources_guinea=["Africaguinee","VisionGuinee"]
+source_maurice = ["lemauricien_com","defimediainfo"]
+sources_niger =["actuniger","nigerexpress"]
+sources_tunisia=["tunistribune","nawaat"]
+sources_maroc=["Leconomiste_","lanouvelleT","LiberationMaroc"]
 
-sources_algeria = []
-
-
+#Theo
 sources_senegal = ["LeSoleilonline", "QuotidienSN"]
 sources_gabon = ["InfosGabon"]
 sources_mali = ["JourDuMali"]
@@ -50,8 +58,17 @@ sources_madagascar = ["madatribune"]
 
 #sources_senegal = ["QuotidienSN"]
 
-sources = {'Senegal': sources_senegal,
-           'Algeria': sources_algeria, 
+            
+sources = {'Algeria': sources_algeria,
+           'Ivory Coast':sources_ivory_coast,
+           'Cameroun':sources_cameroun,
+           'Benin':sources_benin,
+           'Guinee':sources_guinea,
+           "Ile Maurice":source_maurice,
+           "Niger":sources_niger,
+           "Tunisia":sources_tunisia,
+           "Maroc":sources_maroc,
+           'Senegal': sources_senegal,
            'Mali':sources_mali, 
            'Gabon': sources_gabon, 
            'RDC':sources_rdc, 

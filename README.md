@@ -20,6 +20,15 @@ Project that consists in leveraging different sources of information to better i
 ## Supported countries
 For now, our approach focuses on French speaking countries on the African continent.
 Our data includes the following countries:
+- 🇩🇿 Algeria 
+- 🇲🇦 Morocco 
+- 🇹🇳 Tunisia
+- 🇨🇮 Ivory Coast
+- 🇨🇲 Cameroon
+- 🇧🇯 Benin
+- 🇳🇪 Niger
+- 🇲🇺 Mauritius
+- 🇬🇳 Guinea
 - 🇧🇫 Burkina Faso   
 - :burundi: Burundi 
 - :comoros: Comores 
