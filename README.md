@@ -21,24 +21,24 @@ Project that consists in leveraging different sources of information to better i
 For now, our approach focuses on French speaking countries on the African continent.
 Our data includes the following countries:
 - 🇩🇿 Algeria 
-- 🇲🇦 Morocco 
-- 🇹🇳 Tunisia
-- 🇨🇮 Ivory Coast
-- 🇨🇲 Cameroon
 - 🇧🇯 Benin
-- 🇳🇪 Niger
-- 🇲🇺 Mauritius
-- 🇬🇳 Guinea
-- 🇧🇫 Burkina Faso   
+- 🇧🇫 Burkina Faso  
 - :burundi: Burundi 
+- 🇨🇲 Cameroon
 - :comoros: Comores 
 - 🇨🇬 Congo 
 - :gabon: Gabon 
+- 🇬🇳 Guinea
+- 🇨🇮 Ivory Coast
 - :madagascar: Madagascar 
 - :mali: Mali 
+- 🇲🇺 Mauritius
+- 🇲🇦 Morocco 
+- 🇳🇪 Niger
 - 🇨🇫Republique Centrafricaine
 - 🇨🇩 Republique Democratique du Congo 
 - :senegal: Senegal 
+- 🇹🇳 Tunisia
 
 
 
