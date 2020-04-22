@@ -139,7 +139,7 @@ key_words = ['Corona', 'Covid19', 'Covid', 'Covid-19',
 
 
 def main(read_path):   
-    with open(example_path, 'r') as reader:
+    with open(read_path, 'r') as reader:
         data = json.load(reader)
     df = pd.DataFrame(columns=header,
                     data=data['articles'])
@@ -171,7 +171,8 @@ def main(read_path):
     return clean_df
 
 if __name__ == "__main__":
-    example_article = 'articles_JourDuMali_2020-02-01_2020-04-14.json'
-    example_path = os.path.join('../data', example_article)
-    clean_df = main(example_path)
+    pass
+    #example_article = 'articles_JourDuMali_2020-02-01_2020-04-14.json'
+    #example_path = os.path.join('../data', example_article)
+    #clean_df = main(example_path)
 
