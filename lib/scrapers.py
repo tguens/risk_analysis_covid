@@ -2,8 +2,6 @@
 File to gather helper functions for the scrapping
 of information sources.
 
-Useful link: 
-http://www.africain.info/afrique-tous-les-journaux-africains
 """
 
 from bs4 import BeautifulSoup
