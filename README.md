@@ -25,7 +25,6 @@ Our data includes the following countries:
 - 🇧🇫 Burkina Faso  
 - :burundi: Burundi 
 - 🇨🇲 Cameroon
-- :comoros: Comores 
 - 🇨🇬 Congo 
 - :gabon: Gabon 
 - 🇬🇳 Guinea
