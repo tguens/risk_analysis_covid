@@ -1,5 +1,4 @@
 # Covid Risk Analysis :earth_africa:
-## Development branch :hammer:
 
 Project that consists in leveraging different sources of information to better inform, track and prepare the covid crisis in some specific countries
 ## Structure of our repository
